@@ -87,6 +87,12 @@ int SimpleStepper::getFullRotationSteps ()
   return 0;
 }
 
+void SimpleStepper::offCoils()
+{
+  for (uint8_t i = 0; i < 4; i++)
+    digitalWrite(_pins[i], LOW);
+}
+
 /** private **/
 
 void SimpleStepper::_writeMotor (int step)

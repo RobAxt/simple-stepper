@@ -53,6 +53,9 @@ class SimpleStepper
 
     void steps(int steps);
     void step();
+    int  getStep() { return _steps; };
+    
+    void offCoils();
 
     bool ready();
 
