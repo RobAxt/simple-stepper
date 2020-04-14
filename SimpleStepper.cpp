@@ -29,11 +29,12 @@
 #include <SimpleStepper.h>
 
 
-SimpleStepper::SimpleStepper (uint8_t sequence,
+SimpleStepper::SimpleStepper (uint8_t sequence, bool clockwise,
                               uint8_t pin1, uint8_t pin2,
                               uint8_t pin3, uint8_t pin4)
 {
   _sequence = sequence;
+  _clockwise = clockwise;
 
   _pins[0] = pin1;
   _pins[1] = pin2;
@@ -48,7 +49,7 @@ SimpleStepper::SimpleStepper (uint8_t sequence,
 
 void SimpleStepper::steps (int steps)
 {
-  _clockwise = steps > 0;
+  _positive = steps > 0;
   _steps = abs(steps);
 }
 
@@ -58,10 +59,9 @@ void SimpleStepper::step ()
   {
     _writeMotor(_actualStep);
 
-    _actualStep = (_clockwise == true)
+    _actualStep = _clockwise == _positive
       ? (_actualStep < 7 ? _actualStep + 1 : 0)
-      : (_actualStep > 0 ? _actualStep - 1 : 7)
-    ;
+      : (_actualStep > 0 ? _actualStep - 1 : 7);
 
     _steps--;
   }

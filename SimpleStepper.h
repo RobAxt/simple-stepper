@@ -36,8 +36,6 @@
 #define STEPS_PER_MOTOR_REVOLUTION_HS 64
 #define STEPS_PER_OUTPUT_REVOLUTION_HS 4076 // ~(64 * 63.68395)
 
-#define MOTOR_SPEED_US 10000
-
 
 class SimpleStepper
 {
@@ -47,13 +45,13 @@ class SimpleStepper
     static const uint8_t FULLSTEP  = 1;
     static const uint8_t HALFSTEP  = 2;
 
-    SimpleStepper(uint8_t sequence,
+    SimpleStepper(uint8_t sequence, bool clockwise,
                   uint8_t pin1, uint8_t pin2,
                   uint8_t pin3, uint8_t pin4);
 
     void steps(int steps);
     void step();
-    int  getStep() { return _steps; };
+    int  getStep() { return _positive? _steps : -_steps; };
     
     void offCoils();
 
@@ -70,7 +68,8 @@ class SimpleStepper
     uint8_t _pins[4]; // motor pins
     uint8_t _sequence; // the motor sequence
 
-    bool _clockwise;
+    bool _clockwise; // direction of rotation when _positive is true
+    bool _positive; // sign of _steps
 
     const uint8_t _motorSequences[3][8] = {
       // wake drive
