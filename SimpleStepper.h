@@ -49,9 +49,11 @@ class SimpleStepper
                   uint8_t pin1, uint8_t pin2,
                   uint8_t pin3, uint8_t pin4);
 
-    void steps(int steps);
-    void step();
+    void setDirection(bool clockwise) { _clockwise = clockwise };
+    bool getDirection() { return _clockwise };
+    void setStep(int steps);
     int  getStep() { return _positive? _steps : -_steps; };
+    void step();
     
     void offCoils();
 

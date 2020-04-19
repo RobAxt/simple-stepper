@@ -47,7 +47,7 @@ SimpleStepper::SimpleStepper (uint8_t sequence, bool clockwise,
   pinMode(pin4, OUTPUT);
 }
 
-void SimpleStepper::steps (int steps)
+void SimpleStepper::setStep (int steps)
 {
   _positive = steps > 0;
   _steps = abs(steps);
